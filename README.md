@@ -3,7 +3,8 @@
 [![Veaba's github stats](https://github-readme-stats.vercel.app/api?username=Veaba)](https://github.com/veaba/github-readme-stats)
 
 
-- 🤔 I'm started job hunting. 
+- 🤔 I'm started job hunting.
+- 🔭 I'm a member of [Vuejs](https://github.com/vuejs) Chinese docs team.
 <!--
 **veaba/veaba** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
