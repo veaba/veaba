@@ -5,6 +5,13 @@
 
 - 🤔 I'm started job hunting.
 - 🔭 I'm a member of [Vuejs](https://github.com/vuejs) Chinese docs team.
+- 🌱 I's currently focusing on the following tasks.
+  - Chinese translation for v3.vuejs.org: [docs-next-zh-cn](https://github.com/vuejs/docs-next-zh-cn/).
+  - A http proxy server of rust language (likeness Nginx) [Rusic](https://github.com/veaba/rustic).
+  - Developing A prosonal blog.
+  - Developing A note system,all system are operational.
+  - Developing Some tools.
+- ⚡ Fun fact: Everything is just begain.
 <!--
 **veaba/veaba** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
