@@ -2,7 +2,7 @@
 
 ![Veaba's github stats](https://github-readme-stats.vercel.app/api?username=Veaba)
 
-![Veaba's github langs](https://github-readme-stats.vercel.app/api/top-langs/?username=veaba)
+![Veaba's github langs](https://github-readme-stats.vercel.app/api/top-langs/?username=veaba&layout=compact)
 
 
 - 🤔 I'm started job hunting.
