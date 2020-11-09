@@ -1,6 +1,8 @@
 ### Hi there 👋
 
-[![Veaba's github stats](https://github-readme-stats.vercel.app/api?username=Veaba)](https://github.com/veaba/github-readme-stats)
+![Veaba's github stats](https://github-readme-stats.vercel.app/api?username=Veaba)](https://github.com/veaba/github-readme-stats)
+
+![Veaba's github langs](https://github-readme-stats.vercel.app/api/top-langs/?username=veaba&layout=compact)
 
 
 - 🤔 I'm started job hunting.
