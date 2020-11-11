@@ -1,9 +1,9 @@
 ### Hi there 👋
 
-![Veaba's github stats](https://github-readme-stats.vercel.app/api?username=Veaba)
-
-![Veaba's github langs](https://github-readme-stats.vercel.app/api/top-langs/?username=veaba&layout=compact)
-
+<p>
+  <img src="https://github-readme-stats.vercel.app/api?username=veaba">
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=veaba&layout=compact" height="195">
+</p>
 
 - 🤔 I'm started job hunting.
 - 🔭 I'm a member of [Vuejs](https://github.com/vuejs) Chinese docs team.
@@ -13,7 +13,7 @@
   - Developing A prosonal blog.
   - Developing A note system,all system are operational.
   - Developing Some tools.
-- ⚡ Fun fact: Everything is just begain.
+- ⚡ Fun fact: Everything is just begin.
 <!--
 **veaba/veaba** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
