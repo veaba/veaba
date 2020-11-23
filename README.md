@@ -6,6 +6,7 @@
 </p>
 
 - 🤔 I'm started job hunting.
+- ✨ Learning English...
 - 🔭 I'm a member of [Vuejs](https://github.com/vuejs) Chinese docs team.
 - 🌱 I's currently focusing on the following tasks.
   - Chinese translation for v3.vuejs.org: [docs-next-zh-cn](https://github.com/vuejs/docs-next-zh-cn/).
