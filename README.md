@@ -1,7 +1,7 @@
 ### Hi there 👋
 
-<p>
-  <img src="https://github-readme-stats.vercel.app/api?username=veaba">
+<p >
+  <img src="https://github-readme-stats.vercel.app/api?username=veaba" height="195">
   <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=veaba&layout=compact" height="195">
 </p>
 
