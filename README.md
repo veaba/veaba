@@ -2,6 +2,8 @@
 
 **veaba's blog**: [veaba.me](https://veaba.me)
 
+![veaba's blog status](https://github.com/veaba/veaba/workflows/release%20docs%20CI/badge.svg)
+
 <p >
   <img src="https://github-readme-stats.vercel.app/api?username=veaba" height="170">
   <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=veaba&layout=compact" height="170">
