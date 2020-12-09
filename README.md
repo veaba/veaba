@@ -1,6 +1,6 @@
 ### Hi there 👋
 
-**veaba's blog**: [veaba.me](https://veaba.me)
+**veaba's blog**: [veaba.me](https://www.veaba.me)
 
 ![veaba's blog status](https://github.com/veaba/veaba/workflows/release%20docs%20CI/badge.svg)
 

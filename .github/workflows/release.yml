@@ -32,5 +32,5 @@ jobs:
           ACCESS_TOKEN_DEPLOY: ${{secrets.ACCESS_TOKEN }}
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: ./src/.vuepress/dist
-          CNAME: veaba.me
+          CNAME: www.veaba.me
         uses: veaba/vuepress-actions@v0.83
