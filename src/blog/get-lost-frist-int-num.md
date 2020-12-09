@@ -46,30 +46,48 @@ function getMinInt(arr) {
   const filterArray = sortArray.filter((item) => item > 0);
 
   for (let item of filterArray) {
-    if (item > out + 1) out = item - out - 1;
+    if (item <= out) out = item + 1;
   }
+
   const minValue = Math.min.apply(null, filterArray);
+  const maxValue = Math.max.apply(null, filterArray);
+
   if (minValue > 1) out = 1;
+  if (minValue === 1 && out >= maxValue) out = 1;
   return out;
 }
+```
+
+测试用例：
+
+```js
+const ex1 = [1, 2, 0]; // out 1
+
+const ex2 = [3, 4, -1, 1]; // out 2
+
+const ex3 = [7, 8, 9, 11, 12]; // out 1
+
+const ex4 = [1, 2, 4, 5, 6]; // out 3
+
+const ex5 = [6, 5, 4, 2, 1]; //out  3
+
+const ex6 = [9, 8, 2]; // out 1
+
+const ex7 = [1, 2, 4, 5]; // out 3
+
+const ex8 = [1, 2, 5, 6]; // out 3
+
+const ex9 = [1, 2, 3]; // out 1
+
+const ex10 = [3, 2, 1]; // out 1
+
+const ex11 = []; // out 1
 ```
 
 但这道题目，最恶心的地方是，让你从时间复杂度和空间复杂度考虑，而不是让你只算出来。
 
 不好意思，我先恶补一下 `时间复杂度`、`空间复杂度` 再来。
 
-
 ## 结尾：
 
 - 该方法并未完全的覆盖测试用例，有问题的话，[还望指出](https://github.com/veaba/veaba/issues/new)
-
-- `2020年12月9日21:34:47` 已发一下问题：
-
-```js
-
-const ex7 = [1, 2, 4, 5]; // 3 error 
-
-const ex8 = [1, 2, 5, 6]; // 3 error
-
-
-```
