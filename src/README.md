@@ -11,3 +11,5 @@ Coming soon...
 - [原创：JavaScript 获取第一个缺失的正整数](/blog/get-lost-frist-int-num)
 
 - [原创：JavaScript “卧倒”重组数组](/blog/sort-string)
+
+- [JavaScript 实现最长连续字符串组合](/blog/longtest-substring-without-repeating-char)
