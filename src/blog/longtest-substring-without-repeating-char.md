@@ -69,3 +69,11 @@ lengthOfLongestSubstring("");
 lengthOfLongestSubstring("queuecasdsa");
 lengthOfLongestSubstring("aab");
 ```
+
+## 思考：
+
+- 如果题目换成，获取最长长度的字符串出来呢？
+
+```js
+return subStr; // 即可
+```
