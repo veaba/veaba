@@ -13,3 +13,5 @@ Coming soon...
 - [JavaScript 实现最长连续字符串组合](/blog/longtest-substring-without-repeating-char)
 
 - [原创：JavaScript 寻找两个正序数组的中位数](/blog/median-of-two-sorted-arrays-submission)
+
+- [原创：JavaScript 获取版本差值](/blog/median-of-two-sorted-arrays-submission)
