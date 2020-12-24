@@ -1,8 +1,6 @@
 # Hello world
 
-
 Coming soon...
-
 
 ## 算法问题
 
@@ -13,3 +11,5 @@ Coming soon...
 - [原创：JavaScript “卧倒”重组数组](/blog/sort-string)
 
 - [JavaScript 实现最长连续字符串组合](/blog/longtest-substring-without-repeating-char)
+
+- [原创：JavaScript 寻找两个正序数组的中位数](/blog/median-of-two-sorted-arrays-submission)
