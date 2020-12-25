@@ -94,3 +94,29 @@ var longestPalindrome = function(s) {
 // console.log("result==>", longestPalindrome("babad")); // bab
 console.log("result==>", longestPalindrome("cbbd")); // bab
 ```
+
+错误的方案3：
+
+```js
+
+const longestPalindrome = function(s) {
+  if (!s.length || (s.length && s.length === 1)) return s[0] || "";
+  
+
+  const ijArray = [];
+  for (let i = 0; i < s.length; i++) {
+    for (let j = s.length; j > 0; j--) {
+      // console.log("=>", i, j);
+      if (s[i] === s[j] && i < j) {
+        console.log("==>", s[i], s[j], "i=>", i, "j=>", j);
+        ijArray.push(s[i], s[j]);
+      }
+    }
+  }
+  return ijArray;
+};
+
+console.log("result==>", longestPalindrome("abbd")); // bb
+console.log("result==>", longestPalindrome("abbbd")); // xbb
+console.log("result==>", longestPalindrome("babad")); // bab 或 aba
+```
