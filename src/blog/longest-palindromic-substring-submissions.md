@@ -95,13 +95,11 @@ var longestPalindrome = function(s) {
 console.log("result==>", longestPalindrome("cbbd")); // bab
 ```
 
-错误的方案3：
+错误的方案 3：
 
 ```js
-
 const longestPalindrome = function(s) {
   if (!s.length || (s.length && s.length === 1)) return s[0] || "";
-  
 
   const ijArray = [];
   for (let i = 0; i < s.length; i++) {
@@ -120,3 +118,79 @@ console.log("result==>", longestPalindrome("abbd")); // bb
 console.log("result==>", longestPalindrome("abbbd")); // xbb
 console.log("result==>", longestPalindrome("babad")); // bab 或 aba
 ```
+
+错误的方案 4：
+
+```js
+const longestPalindrome = function(s) {
+  if (!s.length || (s.length && s.length === 1)) return s[0] || "";
+
+  const ijArray = [];
+  for (let i = 1; i < s.length; i++) {
+    const left = s.slice(0, i);
+    const right = s.slice(i);
+
+    const max = Math.max(left.length, right.length);
+
+    for (let j = 0; j < max; j++) {
+      if (left[j] && right[j]) {
+        // 先处理偶数情况
+        // left 从后往前
+        const lastLeftIndex = left.length - 1 - j;
+        // console.log("lastLeftIndex=>",left[lastLeftIndex],right[j])
+        if (left[lastLeftIndex] === right[j]) {
+          console.log("=>i", i, left, right);
+          console.log("抽中结果=>", i, j, left[lastLeftIndex], right[j]);
+          const endIndex = i + (j + 1);
+
+          console.log("lastLeftIndex=>>", lastLeftIndex);
+          ijArray.push([
+            lastLeftIndex,
+            endIndex,
+            s.slice(lastLeftIndex, endIndex),
+          ]);
+        }
+      }
+    }
+  }
+  return ijArray;
+};
+```
+
+但很遗憾，最终未能实现出来，但其中提出了一个很好的方法就是：
+
+- 对比左右侧，并翻转右侧，这个思路是可以
+
+  - 缺陷 1： 仅对最小值进行查询，无法区分 `bab`、`bb` 的情况
+
+## 答案
+
+经过查找，获得本答案的结果：
+
+```js
+const longestPalindrome = function(s) {
+  if (!s.length || (s.length && s.length === 1)) return s[0] || "";
+  let result = "";
+  for (let i = 0; i < s.length; i++) {
+    for (let j = i + 1; j <= s.length; j++) {
+      const left = s.slice(i, j);
+      const right = left
+        .split("")
+        .reverse()
+        .join("");
+
+      console.log("i=>", i, "j=>", j, "left=>", left, "right=>", right);
+      if (left === right) {
+        result = left.length > result.length ? left : result;
+      }
+    }
+  }
+  return result;
+};
+```
+
+## 总结：
+
+- 对于 `for` 循环还不是非常精通以及实际使用场景
+
+- 对于比较常的想法，技巧存储不够，比如 `result = left.length > result.length ? left : result;`
