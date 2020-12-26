@@ -39,27 +39,29 @@ function compare(version1, version2) {
   let rightCount = right.reduce((a, b) => a + b);
 
   const diff = rightCount - leftCount;
-  console.log("left=>", left, "right=>", right, "diff=>", diff);
+  // console.log("left=>", left, "right=>", right, "diff=>", diff);
 
   const countLen = (diff + "").length;
   const countArray = Array(len).fill("0");
 
-  console.log("before==>", countArray);
+  // console.log("before==>", countArray);
 
   for (let i = 0; i < countLen; i++) {
     const diffStr = diff + "";
-    console.log("for==>", i, diffStr);
+    // console.log("for==>", i, diffStr);
 
     countArray[len - 1 - i] = diffStr[i];
   }
 
-  console.log("========>", countArray);
-  const ret = "-" + countArray.join(".");
-  console.log("ret==>", ret);
+  // console.log("========>", countArray);
+  const ret =  countArray.join(".");
+  // console.log("ret==>", ret);
   return ret;
 }
 
-compare("0.1", "1.1");
+console.log(compare("0.1", "1.1")=='1.0');
+console.log(compare("1.1", "1.1.1")=='0.0.1');
+console.log(compare("1.0.1", "1.11")=='0.10.9'); 
 // compare("1.1", "1.11.1");
 // compare("1.1.1", "1.2");
 // 实例1：("0.1","1.1")   => 10->1
