@@ -1,10 +1,13 @@
 {
-  
   "scripts": {
     "dev": "vuepress dev src",
-    "build": "vuepress build src"
+    "build": "vuepress build src",
+    "test": "jest"
   },
   "dependencies": {
     "vuepress": "^1.7.1"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3"
   }
 }

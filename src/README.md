@@ -16,5 +16,5 @@ Coming soon...
 
 - [原创：JavaScript 寻找两个正序数组的中位数](/blog/median-of-two-sorted-arrays-submission)
 
-- [TODO 原创：JavaScript 获取版本差值](/blog/get-version-number)
-
+- [原创：JavaScript 获取版本差值](/blog/get-version-number)
+	- 已经部署测试用例，见 `__test__/*`
