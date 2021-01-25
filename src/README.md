@@ -6,7 +6,7 @@ Coming soon...
 
 - [原创：JavaScript 实现二叉树镜像树](/blog/mirrorTree)
 
-- [原创：JavaScript 获取第一个缺失的正整数](/blog/get-lost-frist-int-num)
+- [原创：JavaScript 获取第一个缺失的正整数](/blog/get-lost-first-int-num)
 
 - [原创：JavaScript “卧倒”重组数组](/blog/sort-string)
 
@@ -17,4 +17,13 @@ Coming soon...
 - [原创：JavaScript 寻找两个正序数组的中位数](/blog/median-of-two-sorted-arrays-submission)
 
 - [原创：JavaScript 获取版本差值](/blog/get-version-number)
+
 	- 已经部署测试用例，见 `__test__/*`
+
+- [原创：JavaScript 获取数组深度](/blog/get-array-deep-level)
+
+    - 已部署测试用例，见 `__test__/*`
+
+- [原创：JavaScript 获取列表元素深度，以及对应匹配索引](/blog/get-list-tag-parent-deep-level)
+
+    - 已部署测试用例，见 `__test__/*`

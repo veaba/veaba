@@ -24,8 +24,7 @@
 
 思路 2：把 `.` 当做小数点,注意：这里并非 `100%` 按照题目要求实现 `符号`
 
-- 核心：拉平最大的数组长度
-	- 缺点：未能解决进制借位的问题
+- 核心：拉平最大的数组长度 - 缺点：未能解决进制借位的问题
 
 ```js
 /**
@@ -35,36 +34,36 @@
  * @return int整型
  */
 function compare(version1, version2) {
-	let left = version1.split(".");
-	let right = version2.split(".");
-	let len = 0;
-	
-	console.log(left, right);
-	
-	if (left.length > right.length) {
-		len = left.length;
-		// right fill
-		const le = left.length - right.length;
-		right = right.concat(Array(le).fill("0"));
-	} else if (left.length < right.length) {
-		// right fill
-		const le = right.length - left.length;
-		left = left.concat(Array(le).fill("0"));
-		len = right.length;
-	} else len = left.length;
-	
-	let leftCount = left.reduce((a, b) => a + b);
-	let rightCount = right.reduce((a, b) => a + b);
-	
-	const diff = rightCount - leftCount;
-	const countLen = (diff + "").length;
-	const countArray = Array(len).fill("0");
-	for (let i = 0; i < countLen; i++) {
-		const diffStr = diff + "";
-		countArray[len - 1 - i] = diffStr[i];
-	}
-	const ret = "-" + countArray.join(".");
-	return ret;
+  let left = version1.split(".");
+  let right = version2.split(".");
+  let len = 0;
+
+  console.log(left, right);
+
+  if (left.length > right.length) {
+    len = left.length;
+    // right fill
+    const le = left.length - right.length;
+    right = right.concat(Array(le).fill("0"));
+  } else if (left.length < right.length) {
+    // right fill
+    const le = right.length - left.length;
+    left = left.concat(Array(le).fill("0"));
+    len = right.length;
+  } else len = left.length;
+
+  let leftCount = left.reduce((a, b) => a + b);
+  let rightCount = right.reduce((a, b) => a + b);
+
+  const diff = rightCount - leftCount;
+  const countLen = (diff + "").length;
+  const countArray = Array(len).fill("0");
+  for (let i = 0; i < countLen; i++) {
+    const diffStr = diff + "";
+    countArray[len - 1 - i] = diffStr[i];
+  }
+  const ret = "-" + countArray.join(".");
+  return ret;
 }
 
 console.log(compare("0.1", "1.1"));
@@ -72,9 +71,9 @@ console.log(compare("1.1", "1.11.1"));
 // compare("1.1.1", "1.2");
 ```
 
-思路3：借鉴思路2的基础，上做了借位出来，并通过了测试用例
+思路 3：借鉴思路 2 的基础，上做了借位出来，并通过了测试用例
 
-```cmd 
+```cmd
 // 可在根目录上执行
 npm run test
 ```
@@ -89,49 +88,49 @@ npm run test
  * @return string
  */
 function compare(version1, version2) {
-	let left = version1.split("."); // [0,1]
-	let right = version2.split("."); // [1.1]
-	let len = 0;
-	
-	console.log(left, right);
-	
-	if (left.length > right.length) {
-		len = left.length;
-		// right fill
-		const le = left.length - right.length;
-		right = right.concat(Array(le).fill("0"));
-	} else if (left.length < right.length) {
-		// right fill
-		const le = right.length - left.length;
-		left = left.concat(Array(le).fill("0"));
-		len = right.length;
-	} else len = left.length;
-	const arrayData = [];
-	let decimal = 0; // 十进制借位
-	for (let i = len - 1; i > -1; i--) {
-		let rightItem = right[i];
-		const leftItem = left[i];
-		let diff = 0;
-		/**
-		 *   [1, 11, 0]
-		 * - [1, 0 , 1]
-		 * ------------------
-		 * = [0, 10, 9]
-		 */
-		// decimal handler
-		if ((rightItem + decimal) < leftItem) {
-			rightItem = (rightItem + decimal) + 10;
-			diff = rightItem - leftItem;
-			decimal = 1;
-		} else {
-			diff = (rightItem - decimal) - leftItem;
-			decimal = 0;
-		}
-		arrayData.push(diff);
-	}
-	
-	// console.log("arrayData========>", arrayData);
-	return arrayData.reverse().join('.');
+  let left = version1.split("."); // [0,1]
+  let right = version2.split("."); // [1.1]
+  let len = 0;
+
+  console.log(left, right);
+
+  if (left.length > right.length) {
+    len = left.length;
+    // right fill
+    const le = left.length - right.length;
+    right = right.concat(Array(le).fill("0"));
+  } else if (left.length < right.length) {
+    // right fill
+    const le = right.length - left.length;
+    left = left.concat(Array(le).fill("0"));
+    len = right.length;
+  } else len = left.length;
+  const arrayData = [];
+  let decimal = 0; // 十进制借位
+  for (let i = len - 1; i > -1; i--) {
+    let rightItem = right[i];
+    const leftItem = left[i];
+    let diff = 0;
+    /**
+     *   [1, 11, 0]
+     * - [1, 0 , 1]
+     * ------------------
+     * = [0, 10, 9]
+     */
+    // decimal handler
+    if (rightItem + decimal < leftItem) {
+      rightItem = rightItem + decimal + 10;
+      diff = rightItem - leftItem;
+      decimal = 1;
+    } else {
+      diff = rightItem - decimal - leftItem;
+      decimal = 0;
+    }
+    arrayData.push(diff);
+  }
+
+  // console.log("arrayData========>", arrayData);
+  return arrayData.reverse().join(".");
 }
 ```
 
@@ -141,22 +140,20 @@ function compare(version1, version2) {
 const compare = require("../examples/get-version-number");
 
 describe("get-version-number", () => {
-	it("version 0.1 -> 1.1 = 1.0", () => {
-		expect(compare("0.1", "1.1")).toBe("1.0");
-	});
-	
-	it("version 1.1 -> 1.1.1 = 0.0.1", () => {
-		expect(compare("1.1", "1.1.1")).toBe("0.0.1");
-	});
-	
-	it("version 1.0.1 -> 1.11 = 0.10.9", () => {
-		expect(compare("1.0.1", "1.11")).toBe("0.10.9");
-	});
-});
+  it("version 0.1 -> 1.1 = 1.0", () => {
+    expect(compare("0.1", "1.1")).toBe("1.0");
+  });
 
+  it("version 1.1 -> 1.1.1 = 0.0.1", () => {
+    expect(compare("1.1", "1.1.1")).toBe("0.0.1");
+  });
+
+  it("version 1.0.1 -> 1.11 = 0.10.9", () => {
+    expect(compare("1.0.1", "1.11")).toBe("0.10.9");
+  });
+});
 ```
 
 ## 结尾
 
 - 本方法已覆盖部分测试用例，有问题的话，[还望指出](https://github.com/veaba/veaba/issues/new)
-

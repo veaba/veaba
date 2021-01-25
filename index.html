@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+		<meta charset="UTF-8">
+		<title>E2E test</title>
+</head>
+<body>
+
+</body>
+<script>
+	const arrayDeepLevel = function (array) {
+		const arrayStr = JSON.stringify(array);
+		let clearArrayStr = "";
+		// TODO: 这里的正则没有写好
+		arrayStr.replace(/(?:(\[|\]))/g, function ($1) {
+			console.log($1);
+			clearArrayStr += $1;
+			return $1;
+		});
+		
+		const leftStrItems = [];
+		// const rightStrItems = [];
+		for (let i = 0; i < clearArrayStr.length; i++) {
+			// start tag
+			if (clearArrayStr[i] === "[") {
+				leftStrItems.push(i);
+				// end tag
+			}
+			// else if (clearArrayStr[i] === "]") {
+			//   rightStrItems.push(i);
+			// }
+		}
+		
+		const leftMaps = {};
+		for (let i = 0; i < leftStrItems.length; i++) {
+			const item = leftStrItems[i];
+			leftMaps[item] = i * 2 - item;
+		}
+		const levelArray = Object.values(leftMaps);
+		
+		return Math.max.apply(this, levelArray);
+	};
+	const o = arrayDeepLevel([0, [2], [2, [3]]]);
+	// const o = arrayDeepLevel(['a', ['b'], ['c', ['d']]]);
+	// [0, [2], [2, [3]]]
+	console.info('o=>', o);
+
+
+</script>
+</html>
