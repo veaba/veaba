@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>循环下 limit 指定的任务栈个数</title>
+    <meta name="generator" content="VuePress 1.8.0">
+    
+    <meta name="description" content="">
+    
+    <link rel="preload" href="/assets/css/0.styles.fab77d47.css" as="style"><link rel="preload" href="/assets/js/app.0c0533ca.js" as="script"><link rel="preload" href="/assets/js/2.4521526d.js" as="script"><link rel="preload" href="/assets/js/12.934dbbaf.js" as="script"><link rel="prefetch" href="/assets/js/10.a857f5ca.js"><link rel="prefetch" href="/assets/js/11.1d974e6d.js"><link rel="prefetch" href="/assets/js/13.13615bc2.js"><link rel="prefetch" href="/assets/js/14.264f1e21.js"><link rel="prefetch" href="/assets/js/15.70f33ed9.js"><link rel="prefetch" href="/assets/js/16.7053edce.js"><link rel="prefetch" href="/assets/js/17.1680dc8b.js"><link rel="prefetch" href="/assets/js/3.28f8f17c.js"><link rel="prefetch" href="/assets/js/4.865692a8.js"><link rel="prefetch" href="/assets/js/5.81254301.js"><link rel="prefetch" href="/assets/js/6.6e8c67be.js"><link rel="prefetch" href="/assets/js/7.46ba0e08.js"><link rel="prefetch" href="/assets/js/8.b1a7e5ec.js"><link rel="prefetch" href="/assets/js/9.7d6115e6.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.fab77d47.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="循环下-limit-指定的任务栈个数"><a href="#循环下-limit-指定的任务栈个数" class="header-anchor">#</a> 循环下 limit 指定的任务栈个数</h1> <h2 id="背景"><a href="#背景" class="header-anchor">#</a> 背景</h2> <p>由于某厂商的云摄像头存储在 <code>SD</code> 卡中的视频是按照 1 个小时一个文件夹，一分钟一段规则的，且视频格式不是标准 <code>.mp4</code> 文件，需要通过 <code>ffmpeg</code> 转换，但这个转换是很费时间，加上计算机的资源有效，无法同时进行这么多的异步任务处理。后续还需要进行合并小视频为大视频的过程。</p> <p>由此衍生出来一个实际的问题，如何在有限的计算机资源下，饱和同并发的任务执行。</p> <h2 id="题目"><a href="#题目" class="header-anchor">#</a> 题目</h2> <p>如何在 1000 次循环，每次循环都会执行一次异步任务，异步耗费时间，且计算机资源有限，因此限制仅支持同时处理 10 个异步任务。</p> <h2 id="分析"><a href="#分析" class="header-anchor">#</a> 分析</h2> <p>根据题目，我们抽象问题，如下：</p> <ol><li><p>构造一个任务栈，<code>stacks = []</code> , 最大 ``limit = 10 `个（后续支持可指定）。</p></li> <li><p>如果 <code>stacks</code> 小于 <code>limit</code> 个数，则往后 <code>push</code> 异步事件。</p></li> <li><p>否则，等待完成其中只一个，后续再插入，始终保证 <code>stacks = 10个异步任务</code>，饱和式执行任务。</p></li></ol> <h3 id="js-自带异步编程"><a href="#js-自带异步编程" class="header-anchor">#</a> JS 自带异步编程</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">asyncTask</span><span class="token punctuation">(</span><span class="token parameter">i</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;===&gt; task: &quot;</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span> Math<span class="token punctuation">.</span><span class="token function">ceil</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">handlerTasks</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">20</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">asyncTask</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">handlerTasks</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>结果同时刻开始执行 20 个异步任务：</p> <div class="language-s extra-class"><pre class="language-text"><code>===&gt; task:  1
+===&gt; task:  2
+===&gt; task:  5
+===&gt; task:  6
+===&gt; task:  8
+===&gt; task:  11
+===&gt; task:  12
+===&gt; task:  15
+===&gt; task:  17
+===&gt; task:  0
+===&gt; task:  3
+===&gt; task:  4
+===&gt; task:  7
+===&gt; task:  9
+===&gt; task:  10
+===&gt; task:  13
+===&gt; task:  14
+===&gt; task:  16
+===&gt; task:  18
+===&gt; task:  19
+</code></pre></div><p>实验代码：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">/**
+1. 构造一个任务栈，`stacks = []` , 最大 ``limit = 10 `个（后续支持可指定）。
+
+2. 如果 `stacks` 小于 `limit` 个数，则往后 `push` 异步事件。
+
+3. 否则，等待完成其中只一个，后续再插入，始终保证 `stacks = 10个异步任务`，饱和式执行任务。
+*/</span>
+
+<span class="token keyword">const</span> stacks <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 异步任务栈</span>
+<span class="token keyword">const</span> limit <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span> <span class="token comment">// 限制最大并发任务</span>
+<span class="token keyword">let</span> events <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">asyncTask</span><span class="token punctuation">(</span><span class="token parameter">i<span class="token punctuation">,</span> index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;params=&gt;&quot;</span><span class="token punctuation">,</span> arguments<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">let</span> random <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">ceil</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">setTimeout</span><span class="token punctuation">(</span>
+    <span class="token punctuation">(</span><span class="token parameter">time</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;===&gt; task: &quot;</span><span class="token punctuation">,</span> i<span class="token punctuation">,</span> <span class="token string">&quot;===&gt; time: &quot;</span><span class="token punctuation">,</span> time <span class="token operator">+</span> <span class="token string">&quot;s&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      stacks<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span>index<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 事件完成后移除</span>
+      <span class="token comment">// TODO push 到 stacks 里去</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>events <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">asyncTask</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> i<span class="token punctuation">,</span> index<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 执行一次，紧接着执行另外一次，就不需要放到stacks 里了</span>
+      <span class="token punctuation">}</span>
+      events<span class="token operator">--</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    random <span class="token operator">*</span> <span class="token number">1000</span><span class="token punctuation">,</span>
+    random
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">handlerTasks</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> pushIndex <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> events<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>stacks<span class="token punctuation">.</span>length <span class="token operator">&lt;</span> limit<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      stacks<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span><span class="token function">asyncTask</span><span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> j<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+  <span class="token function">runTasks</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">function</span> <span class="token function">runTasks</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  stacks<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">item<span class="token punctuation">,</span> index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token function">item</span><span class="token punctuation">(</span>index<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">app</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">time</span><span class="token punctuation">(</span><span class="token string">&quot;time&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">handlerTasks</span><span class="token punctuation">(</span>events<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">//   console.log(&quot;last task=&gt;&quot;, stacks);</span>
+  console<span class="token punctuation">.</span><span class="token function">timeEnd</span><span class="token punctuation">(</span><span class="token string">&quot;time&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token function">setInterval</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;stacks=&gt;&quot;</span><span class="token punctuation">,</span> stacks<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">app</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.0c0533ca.js" defer></script><script src="/assets/js/2.4521526d.js" defer></script><script src="/assets/js/12.934dbbaf.js" defer></script>
+  </body>
+</html>

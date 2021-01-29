@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>原创：JavaScript “卧倒”重组数组</title>
+    <meta name="generator" content="VuePress 1.8.0">
+    
+    <meta name="description" content="">
+    
+    <link rel="preload" href="/assets/css/0.styles.fab77d47.css" as="style"><link rel="preload" href="/assets/js/app.0c0533ca.js" as="script"><link rel="preload" href="/assets/js/2.4521526d.js" as="script"><link rel="preload" href="/assets/js/17.1680dc8b.js" as="script"><link rel="prefetch" href="/assets/js/10.a857f5ca.js"><link rel="prefetch" href="/assets/js/11.1d974e6d.js"><link rel="prefetch" href="/assets/js/12.934dbbaf.js"><link rel="prefetch" href="/assets/js/13.13615bc2.js"><link rel="prefetch" href="/assets/js/14.264f1e21.js"><link rel="prefetch" href="/assets/js/15.70f33ed9.js"><link rel="prefetch" href="/assets/js/16.7053edce.js"><link rel="prefetch" href="/assets/js/3.28f8f17c.js"><link rel="prefetch" href="/assets/js/4.865692a8.js"><link rel="prefetch" href="/assets/js/5.81254301.js"><link rel="prefetch" href="/assets/js/6.6e8c67be.js"><link rel="prefetch" href="/assets/js/7.46ba0e08.js"><link rel="prefetch" href="/assets/js/8.b1a7e5ec.js"><link rel="prefetch" href="/assets/js/9.7d6115e6.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.fab77d47.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="原创-javascript-卧倒-重组数组"><a href="#原创-javascript-卧倒-重组数组" class="header-anchor">#</a> 原创：JavaScript “卧倒”重组数组</h1> <blockquote><p>这道面试题，真的很简单。但是临场发挥脑袋一片空白，虽然找到规律，但还是一直在重复走神。真的很不在状态</p></blockquote> <h2 id="题目"><a href="#题目" class="header-anchor">#</a> 题目</h2> <div class="language- extra-class"><pre class="language-text"><code>[&quot;abc&quot;, &quot;def&quot;, &quot;hig&quot;];  =&gt; ['adh', 'bei', 'cfg']
+</code></pre></div><h2 id="题解过程"><a href="#题解过程" class="header-anchor">#</a> 题解过程</h2> <p>简化规律：</p> <div class="language- extra-class"><pre class="language-text"><code>123 456 789 =&gt; 147 258 369 
+
+1 2 3
+
+4 5 6
+
+7 8 9
+</code></pre></div><ul><li><p>但事实上，这种总结是不正常的规律</p></li> <li><p>实际上，应该是这么说：每次循环 <code>item</code> 都拼接</p></li></ul> <p>一个大循环，分别是数组的元素，下个循环中，如果有值，则拼接在后面</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">&quot;abc&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;def&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;hig&quot;</span><span class="token punctuation">]</span>
+
+<span class="token keyword">const</span> temp <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+arr<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">item<span class="token punctuation">,</span>index</span><span class="token punctuation">)</span><span class="token operator">=&gt;</span><span class="token punctuation">{</span>
+
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token keyword">in</span> item<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>temp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">&amp;&amp;</span>temp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            temp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">+=</span>item<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+        <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+            temp<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>item<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;res==&gt;&quot;</span><span class="token punctuation">,</span>temp<span class="token punctuation">)</span>
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.0c0533ca.js" defer></script><script src="/assets/js/2.4521526d.js" defer></script><script src="/assets/js/17.1680dc8b.js" defer></script>
+  </body>
+</html>

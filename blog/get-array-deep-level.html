@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>原创：JavaScript 获取数组深度</title>
+    <meta name="generator" content="VuePress 1.8.0">
+    
+    <meta name="description" content="">
+    
+    <link rel="preload" href="/assets/css/0.styles.fab77d47.css" as="style"><link rel="preload" href="/assets/js/app.0c0533ca.js" as="script"><link rel="preload" href="/assets/js/2.4521526d.js" as="script"><link rel="preload" href="/assets/js/8.b1a7e5ec.js" as="script"><link rel="prefetch" href="/assets/js/10.a857f5ca.js"><link rel="prefetch" href="/assets/js/11.1d974e6d.js"><link rel="prefetch" href="/assets/js/12.934dbbaf.js"><link rel="prefetch" href="/assets/js/13.13615bc2.js"><link rel="prefetch" href="/assets/js/14.264f1e21.js"><link rel="prefetch" href="/assets/js/15.70f33ed9.js"><link rel="prefetch" href="/assets/js/16.7053edce.js"><link rel="prefetch" href="/assets/js/17.1680dc8b.js"><link rel="prefetch" href="/assets/js/3.28f8f17c.js"><link rel="prefetch" href="/assets/js/4.865692a8.js"><link rel="prefetch" href="/assets/js/5.81254301.js"><link rel="prefetch" href="/assets/js/6.6e8c67be.js"><link rel="prefetch" href="/assets/js/7.46ba0e08.js"><link rel="prefetch" href="/assets/js/9.7d6115e6.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.fab77d47.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="原创-javascript-获取数组深度"><a href="#原创-javascript-获取数组深度" class="header-anchor">#</a> 原创：JavaScript 获取数组深度</h1> <p>计算数组的长度，给出以下例子，计算出数组的深度。</p> <ul><li><code>arrayDeepLevel([1, 2, [3, [1, [0]]]])</code>，长度为 <code>3</code></li> <li><code>arrayDeepLevel([])</code>，长度为 <code>0</code></li> <li><code>arrayDeepLevel([[[]]]</code>，长度为 <code>2</code></li> <li><code>arrayDeepLevel([0, [2], [2, [3]]])</code>，长度为 <code>3</code></li></ul> <h2 id="分析"><a href="#分析" class="header-anchor">#</a> 分析</h2> <ul><li><p>默认最小是 <code>0</code></p></li> <li><p>只计算是数组结构</p></li></ul> <p>第一反应过来，就是要递归循环。</p> <p>所以起初构造了以下函数</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">let</span> level <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token function-variable function">arrayDeepLevel</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">array</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> item <span class="token keyword">of</span> data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">arrayDeepLevel</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+      level<span class="token operator">++</span><span class="token punctuation">;</span>
+      <span class="token keyword">return</span> level<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre></div><p>通过验证，显示上面是成功的，但是，仅是单次使用，比如执行多次后，全局变量 <code>level</code> 就一直累加，显然不是我们想要的结果哦。</p> <p>关键的一点就是，大函数只执行一次，递归是在内部构建，于是有了声明第二个函数的改造。</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> <span class="token function-variable function">arrayDeepLevel</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">array</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> level <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> <span class="token function-variable function">recursion</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">data</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> item <span class="token keyword">of</span> data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token function">recursion</span><span class="token punctuation">(</span>item<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+      level<span class="token operator">++</span><span class="token punctuation">;</span>
+      <span class="token keyword">return</span> level<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token function">recursion</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> arrayDeepLevel<span class="token punctuation">;</span>
+</code></pre></div><p>保证了多次执行的值都是被初始掉。</p> <h2 id="拓展以及延伸"><a href="#拓展以及延伸" class="header-anchor">#</a> 拓展以及延伸</h2> <p>曾在一个项目中处理过类似的问题。</p> <p>简化后，通过移除非数组的元素，我们得到下面的结构比较：</p> <div class="language- extra-class"><pre class="language-text"><code>[1,2,3,[5,6]]  =&gt; [[]]
+
+[1,[2,[3,[]]]] =&gt; [[[[]]]]
+
+...
+
+</code></pre></div><p>我们通过这个结构 <code>[[[[]]]]</code>，认为是一个字符串 <code>'[[[[]]]]'</code>。</p> <p>为了更形象的描述 <code>[</code> 始终对应 <code>]</code> 构成一个 <strong>组合</strong>。</p> <p>如下：</p> <div class="language- extra-class"><pre class="language-text"><code>形象化：		&quot;a,b,c,d      d1,c1,b1,a1&quot;
+对应的 		| | | |       |  |  |  |
+原始字符 		[,[,[,[			  ], ], ], ]
+序号：      0 1 2 3      4  5  6  7
+</code></pre></div><p>于是得到:</p> <div class="language- extra-class"><pre class="language-text"><code>a  index = 0
+b  index = 1
+c  index = 2
+d  index = 3
+d1 index = 4
+c1 index = 5
+b1 index = 6
+a1 index = 7
+</code></pre></div><p>得出并收集它们的索引值关系：</p> <div class="language- extra-class"><pre class="language-text"><code>0  1,  2,  3
+↓  ↓   ↓   ↓
+4  5   6   7
+
+</code></pre></div><p>经过一个 <a href="https://github.com/veaba/pyhtmd/blob/master/pyhtmd/html_parser.py#L216" target="_blank" rel="noopener noreferrer"> level 提取算法<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> 的实现，将得到一个有趣的现象：</p> <p>公式：当前 <code>index</code> x 2 - <code>value</code> = 对应的 <code>level</code></p> <p>我们对 <code>[0,1,2,3]</code>，通过算法转换如下：</p> <table><thead><tr><th>index</th> <th>0</th> <th>1</th> <th>2</th> <th>3</th></tr></thead> <tbody><tr><td>value</td> <td>0</td> <td>1</td> <td>2</td> <td>3</td></tr> <tr><td><code>index</code>*2 - <code>value</code></td> <td>0*2-0=0</td> <td>1*2-1=1</td> <td>2*2-2=2</td> <td>3*2-3=1</td></tr></tbody></table> <p>或许有人说，这个功能可能是个巧合，不妨看一下下面的：</p> <p>已知，我们的结构是 <code>[[[][]]]</code>，此时，左包围是对应索引与右括号的关系是 ,</p> <div class="language- extra-class"><pre class="language-text"><code>0  1,  2,  4
+↓  ↓   ↓   ↓
+7  2   6   5
+</code></pre></div><p>根据公式转换如下：</p> <table><thead><tr><th>index</th> <th>0</th> <th>1</th> <th>2</th> <th>4</th></tr></thead> <tbody><tr><td>value</td> <td>0</td> <td>1</td> <td>2</td> <td>3</td></tr> <tr><td><code>index</code>*2 - <code>value</code></td> <td>0*2-0=0</td> <td>1*2-1=1</td> <td>2*2-2=2</td> <td>3*2-4=2</td></tr></tbody></table> <p>直到这里，我们得出一个结论，只要知道左边的索引值，就可以对应的找到它合并为一个<strong>组合</strong>所在的索引值（即左边 <code>[</code>，找到匹配右边结束的 <code>]</code>），以及它对应的 level。</p> <p>这个算法被我应用于一款 HTML 转 Markdown 工具 <a href="https://github.com/veaba/pyhtmd" target="_blank" rel="noopener noreferrer">Pyhtmd<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>，作为解析 HTML 列表元素 为 markdown 代码的核心支撑。</p> <p>得到最大 level 的深度，只要 <code>Math.max.apply(this,[0,1,2,2])</code> 即可。</p> <p>下面是完整的代码实现：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> <span class="token function-variable function">arrayDeepLevel</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">array</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">time</span><span class="token punctuation">(</span><span class="token string">&quot;get-array-deep-level-test-2==&gt;&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> arrayStr <span class="token operator">=</span> <span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">let</span> clearArrayStr <span class="token operator">=</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">;</span>
+  <span class="token comment">// 这里的正则没有写好</span>
+  arrayStr<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">(?:(\[|\]))</span><span class="token regex-delimiter">/</span><span class="token regex-flags">g</span></span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">$<span class="token number">1</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    clearArrayStr <span class="token operator">+=</span> $<span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> $<span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">const</span> leftStrItems <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token comment">// const rightStrItems = [];</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> clearArrayStr<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// start tag</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>clearArrayStr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">===</span> <span class="token string">&quot;[&quot;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      leftStrItems<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">const</span> leftMaps <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> leftStrItems<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> item <span class="token operator">=</span> leftStrItems<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    leftMaps<span class="token punctuation">[</span>item<span class="token punctuation">]</span> <span class="token operator">=</span> i <span class="token operator">*</span> <span class="token number">2</span> <span class="token operator">-</span> item<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">const</span> levelArray <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">values</span><span class="token punctuation">(</span>leftMaps<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  console<span class="token punctuation">.</span><span class="token function">timeEnd</span><span class="token punctuation">(</span><span class="token string">&quot;get-array-deep-level-test-2==&gt;&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">//  0.113037109375 ms，咋一看时间复杂度是O(n)，但这里空间复杂度很高，加上其他多余的操作</span>
+  <span class="token keyword">return</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> levelArray<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> arrayDeepLevel<span class="token punctuation">;</span>
+</code></pre></div><div class="language-ts extra-class"><pre class="language-ts"><code><span class="token function">it</span><span class="token punctuation">(</span><span class="token string">&quot;4. ==&gt; level:3&quot;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 因为原题目是元素的包括了自己，实际上这里最高二级，是针对外包围计算，而非元素</span>
+  <span class="token function">expect</span><span class="token punctuation">(</span><span class="token function">arrayDeepLevel</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toBe</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="测试用例"><a href="#测试用例" class="header-anchor">#</a> 测试用例</h2> <p>-<a href="/__tests__/get-array-deep-level-test.js">get-array-deep-level</a></p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.0c0533ca.js" defer></script><script src="/assets/js/2.4521526d.js" defer></script><script src="/assets/js/8.b1a7e5ec.js" defer></script>
+  </body>
+</html>

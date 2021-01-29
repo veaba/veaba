@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>JavaScript 获取列表元素深度，以及对应匹配索引</title>
+    <meta name="generator" content="VuePress 1.8.0">
+    
+    <meta name="description" content="">
+    
+    <link rel="preload" href="/assets/css/0.styles.fab77d47.css" as="style"><link rel="preload" href="/assets/js/app.0c0533ca.js" as="script"><link rel="preload" href="/assets/js/2.4521526d.js" as="script"><link rel="preload" href="/assets/js/9.7d6115e6.js" as="script"><link rel="prefetch" href="/assets/js/10.a857f5ca.js"><link rel="prefetch" href="/assets/js/11.1d974e6d.js"><link rel="prefetch" href="/assets/js/12.934dbbaf.js"><link rel="prefetch" href="/assets/js/13.13615bc2.js"><link rel="prefetch" href="/assets/js/14.264f1e21.js"><link rel="prefetch" href="/assets/js/15.70f33ed9.js"><link rel="prefetch" href="/assets/js/16.7053edce.js"><link rel="prefetch" href="/assets/js/17.1680dc8b.js"><link rel="prefetch" href="/assets/js/3.28f8f17c.js"><link rel="prefetch" href="/assets/js/4.865692a8.js"><link rel="prefetch" href="/assets/js/5.81254301.js"><link rel="prefetch" href="/assets/js/6.6e8c67be.js"><link rel="prefetch" href="/assets/js/7.46ba0e08.js"><link rel="prefetch" href="/assets/js/8.b1a7e5ec.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.fab77d47.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="javascript-获取列表元素深度-以及对应匹配索引"><a href="#javascript-获取列表元素深度-以及对应匹配索引" class="header-anchor">#</a> JavaScript 获取列表元素深度，以及对应匹配索引</h1> <p>曾在一个<a href="https://github.com/veaba/pyhtmd" target="_blank" rel="noopener noreferrer">Pyhtmd<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>中处理 HTML List 标签的解析问题。</p> <h2 id="问题-如何解析嵌套多层-html-list-标签"><a href="#问题-如何解析嵌套多层-html-list-标签" class="header-anchor">#</a> 问题：如何解析嵌套多层 HTML list 标签</h2> <p>假设: <code>&lt;ul&gt;</code>= <code>[</code>，<code>&lt;/ul&gt;</code> = <code>]</code>， <code>&lt;ol&gt;</code> 的问题就不展开了。</p> <h2 id="分析"><a href="#分析" class="header-anchor">#</a> 分析：</h2> <p>简化后，通过移除非数组的元素，我们得到下面的结构比较：</p> <div class="language- extra-class"><pre class="language-text"><code>[1,2,3,[5,6]]  =&gt; [[]]
+
+[1,[2,[3,[]]]] =&gt; [[[[]]]]
+
+...
+
+</code></pre></div><p>我们通过这个结构 <code>[[[[]]]]</code>，认为是一个字符串 <code>'[[[[]]]]'</code>。</p> <p>为了更形象的描述 <code>[</code> 始终对应 <code>]</code> 构成一个 <strong>组合</strong>。</p> <p>如下：</p> <div class="language- extra-class"><pre class="language-text"><code>形象化：		&quot;a,b,c,d      d1,c1,b1,a1&quot;
+对应的 		| | | |       |  |  |  |
+原始字符 		[,[,[,[			  ], ], ], ]
+序号：      0 1 2 3      4  5  6  7
+</code></pre></div><p>于是得到:</p> <div class="language- extra-class"><pre class="language-text"><code>a  index = 0
+b  index = 1
+c  index = 2
+d  index = 3
+d1 index = 4
+c1 index = 5
+b1 index = 6
+a1 index = 7
+</code></pre></div><p>得出并收集它们的索引值关系：</p> <div class="language- extra-class"><pre class="language-text"><code>0  1,  2,  3
+↓  ↓   ↓   ↓
+4  5   6   7
+
+</code></pre></div><p>经过一个 <a href="https://github.com/veaba/pyhtmd/blob/master/pyhtmd/html_parser.py#L216" target="_blank" rel="noopener noreferrer"> level 提取算法<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a> 的实现。</p> <p>这个公式是经过长时间的观察、反复推测后，得到了一个有趣的现象：</p> <p>公式：当前 <code>index</code> x 2 - <code>value</code> = 对应的 <code>level</code>，这个公式非常的关键。</p> <p>我们对 <code>[0,1,2,3]</code>，通过算法转换如下：</p> <table><thead><tr><th>index</th> <th>0</th> <th>1</th> <th>2</th> <th>3</th></tr></thead> <tbody><tr><td>value</td> <td>0</td> <td>1</td> <td>2</td> <td>3</td></tr> <tr><td><code>index</code>*2 - <code>value</code></td> <td>0*2-0=0</td> <td>1*2-1=1</td> <td>2*2-2=2</td> <td>3*2-3=3</td></tr></tbody></table> <p>或许有人说，这个公式可能是个巧合，不妨看一下下面的：</p> <p>已知，我们的结构是 <code>[[[][]]]</code>，此时，左包围是对应索引与右括号的关系是 ,</p> <div class="language- extra-class"><pre class="language-text"><code>0  1,  2,  4
+↓  ↓   ↓   ↓
+7  2   6   5
+</code></pre></div><p>根据公式转换如下：</p> <table><thead><tr><th>index</th> <th>0</th> <th>1</th> <th>2</th> <th>4</th></tr></thead> <tbody><tr><td>value</td> <td>0</td> <td>1</td> <td>2</td> <td>3</td></tr> <tr><td><code>index</code>*2 - <code>value</code></td> <td>0*2-0=0</td> <td>1*2-1=1</td> <td>2*2-2=2</td> <td>3*2-4=2</td></tr></tbody></table> <p>直到这里，我们得出一个结论，只要知道左边的索引值，就可以对应的找到它合并为一个<strong>组合</strong>所在的索引值（即左边 <code>[</code>，找到匹配右边结束的 <code>]</code>），以及它对应的 level。</p> <p>这个算法被我应用于一款 HTML 转 Markdown 工具 <a href="https://github.com/veaba/pyhtmd" target="_blank" rel="noopener noreferrer">Pyhtmd<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>，作为解析 HTML 列表元素 为 markdown 代码的核心支撑。</p> <p>现在，如果得到最大 level 的深度，只需 <code>Math.max.apply(this,[0,1,2,2])</code> 即可。</p> <p>下面是完整的代码实现（仅返回 <code>level</code> 最大级）：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> <span class="token function-variable function">arrayDeepLevel</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">array</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> arrayStr <span class="token operator">=</span> <span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>array<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">let</span> clearArrayStr <span class="token operator">=</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">;</span>
+  <span class="token comment">// 这里的正则没有写好</span>
+  arrayStr<span class="token punctuation">.</span><span class="token function">replace</span><span class="token punctuation">(</span><span class="token regex"><span class="token regex-delimiter">/</span><span class="token regex-source language-regex">(?:(\[|\]))</span><span class="token regex-delimiter">/</span><span class="token regex-flags">g</span></span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">$<span class="token number">1</span></span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    clearArrayStr <span class="token operator">+=</span> $<span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> $<span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">const</span> leftStrItems <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token comment">// const rightStrItems = [];</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> clearArrayStr<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// start tag</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>clearArrayStr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">===</span> <span class="token string">&quot;[&quot;</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      leftStrItems<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token comment">// ellipsis right Items ...</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">const</span> leftMaps <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> leftStrItems<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> item <span class="token operator">=</span> leftStrItems<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    leftMaps<span class="token punctuation">[</span>item<span class="token punctuation">]</span> <span class="token operator">=</span> i <span class="token operator">*</span> <span class="token number">2</span> <span class="token operator">-</span> item<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">const</span> levelArray <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">values</span><span class="token punctuation">(</span>leftMaps<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> levelArray<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+module<span class="token punctuation">.</span>exports <span class="token operator">=</span> arrayDeepLevel<span class="token punctuation">;</span>
+</code></pre></div><div class="language-ts extra-class"><pre class="language-ts"><code><span class="token function">it</span><span class="token punctuation">(</span><span class="token string">&quot;4. ==&gt; level:2&quot;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">// 实际上这里最高二级，是针对外包围计算，而非元素</span>
+  <span class="token function">expect</span><span class="token punctuation">(</span><span class="token function">arrayDeepLevel</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toBe</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="总结"><a href="#总结" class="header-anchor">#</a> 总结</h2> <ol><li><p>尽量简化复杂的问题</p></li> <li><p>有时可能需要一双慧眼，以及反复的观测和总结</p></li></ol> <h2 id="测试用例"><a href="#测试用例" class="header-anchor">#</a> 测试用例</h2> <p>-<a href="/__tests__/get-list-tag-parent-deep-level-test.js">get-list-tag-parent-deep-level</a></p></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.0c0533ca.js" defer></script><script src="/assets/js/2.4521526d.js" defer></script><script src="/assets/js/9.7d6115e6.js" defer></script>
+  </body>
+</html>
