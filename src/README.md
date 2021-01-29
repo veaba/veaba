@@ -18,12 +18,16 @@ Coming soon...
 
 - [原创：JavaScript 获取版本差值](/blog/get-version-number)
 
-	- 已经部署测试用例，见 `__test__/*`
+  - 已经部署测试用例，见 `__test__/*`
 
 - [原创：JavaScript 获取数组深度](/blog/get-array-deep-level)
 
-    - 已部署测试用例，见 `__test__/*`
+  - 已部署测试用例，见 `__test__/*`
 
 - [原创：JavaScript 获取列表元素深度，以及对应匹配索引](/blog/get-list-tag-parent-deep-level)
 
-    - 已部署测试用例，见 `__test__/*`
+  - 已部署测试用例，见 `__test__/*`
+
+## 应用问题
+
+- [原创: 循环下 limit 指定的任务栈个数(始终保证定量资源运行)](/blog/limit-stack-count)
