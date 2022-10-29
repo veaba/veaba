@@ -1,3 +1,5 @@
+> Continuously regressing……, so sad！:cry:
+
 ### Hi there 👋
 
 **veaba's blog**: [veaba.me](https://www.veaba.me)
@@ -18,7 +20,7 @@
   - Developing A personal blog.
   - Developing A note system,all system are operational.
   - Developing Some tools.
-- ⚡ Fun fact: Everything is just begin.
+
 <!--
 **veaba/veaba** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
