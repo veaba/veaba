@@ -26,7 +26,7 @@
 - 🔭 I'm a member of [Vuejs](https://github.com/vuejs) Chinese docs team.
 - 🌱 I's currently focusing on the following tasks.
   - Chinese translation for v3.vuejs.org: [docs-next-zh-cn](https://github.com/vuejs/docs-next-zh-cn/).
-  - A http proxy server of rust language (likeness Nginx) [Rusic](https://github.com/veaba/rustic).
+  - A http proxy server of rust language (likeness Nginx) [Rustic](https://github.com/veaba/rustic).
   - Developing A personal blog.
   - Developing A note system,all system are operational.
   - Developing Some tools.
