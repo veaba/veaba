@@ -11,16 +11,6 @@
   <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=veaba&layout=compact" height="170">
 </p>
 
-<p >
-  <img src="src/.vuepress/public/github/github-2025-8-23.png" height="200">
-  <img src="src/.vuepress/public/github/github-2024.png" height="200">
-  <img src="src/.vuepress/public/github/github-2023.png" height="200">
-  <img src="src/.vuepress/public/github/github-2022.png" height="200">
-  <img src="src/.vuepress/public/github/github-2021.png" height="200">
-</p>
-
-
-
 - 🤔 I'm started job hunting.
 - ✨ **Learning English...**
 - 🔭 I'm a member of [Vuejs](https://github.com/vuejs) Chinese docs team.
